@@ -1,0 +1,46 @@
+School Management System - Version 1 (Initial MVP Development)
+
+
+[LOG-001] Repository Initialization
+Date: 11-12-2025
+
+Repository Name: sms-version1
+Description: School Management System - Version 1 (Initial MVP)
+Visibility: Private
+
+Initial Files Created:
+- README.md
+- .gitignore (Python)
+- LICENSE (Basic)
+- log.txt (Development logs)
+
+Status: Repository successfully
+
+Branches Created:
+- main (default, stable)
+- dev (active development branch)
+
+Purpose:
+- 'dev' will be used for all ongoing coding work.
+- 'main' will receive only tested, stable changes.
+
+Status: Branch structure ready.
+
+Created the foundational project structure for Version-1:
+
+- app/
+    - routes/ (auth, admin, teacher, parent)
+    - models/ (users, students, classes, subjects, attendance, grades, timetable)
+    - services/ (helpers, auth_service)
+    - templates/
+    - static/ (css, js, images)
+
+- config/ (configuration files)
+
+Additional project files:
+- requirements.txt (empty for now)
+- Procfile (to be updated)
+- README.md updated earlier
+- log.txt tracking development progress
+
+Status: Project structure successfully established and ready for application setup.
