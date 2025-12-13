@@ -23,7 +23,7 @@ def create_app():
 
     @app.route("/")
     def index():
-        return "SMS Version-1 Backend Running Successfully"
+        return "Welcome to Student Management System <br> Here you can keep track of students, courses, and enrollments."
     
 
   
