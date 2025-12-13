@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 from flask_migrate import Migrate
 from config.settings import Config
 
@@ -23,5 +24,18 @@ def create_app():
     @app.route("/")
     def index():
         return "SMS Version-1 Backend Running Successfully"
+    
+
+  
+
+    @app.route("/health/db")
+    def db_health_check():
+        try:
+            with db.engine.connect() as connection:
+                connection.execute(text("SELECT 1"))
+            return {"status": "ok", "database": "connected"}
+        except Exception as e:
+            return {"status": "error", "details": str(e)}, 500
+
 
     return app
