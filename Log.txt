@@ -1,53 +1,141 @@
-School Management System - Version 1 (Initial MVP Development)
+========================================================
+SCHOOL MANAGEMENT SYSTEM — VERSION-1 DEVELOPMENT LOG
+========================================================
+Author: Govind  
+Project Version: Version-1 (Initial MVP)
+Environment: GitHub + Codespaces + Supabase  
+========================================================
 
 
-[LOG-001] Repository Initialization
+[LOG-001] GitHub Repository Initialization
 Date: 11-12-2025
 
-Repository Name: sms-version1
-Description: School Management System - Version 1 (Initial MVP)
-Visibility: Private
+Actions:
+- Confirmed repository already existed with README.md, .gitignore, and LICENSE.
+- Created log.txt for tracking all development activities.
 
-Initial Files Created:
-- README.md
-- .gitignore (Python)
-- LICENSE (Basic)
-- log.txt (Development logs)
+Status: Repository foundation ready.
 
-Status: Repository successfully
 
-Branches Created:
-- main (default, stable)
-- dev (active development branch)
+
+[LOG-002] Branch Setup for Version-1 Development
+Date: 11-12-2025
+
+Actions:
+- Created new development branch named 'Dev'.
+- Ensured branch separation:
+    - main → stable production code
+    - Dev → active development
+- Verified branch presence via GitHub and terminal.
+- Fixed checkout issues and ensured Codespace synced to Dev branch.
+
+Status: Version control branching workflow ready.
+
+
+
+[LOG-003] Project Folder Structure Setup
+Date: 11-12-2025
+
+Structure established under repository:
+- backend/
+- frontend/
+- docs/
+- assets/
+- config/
+- log.txt (tracking file)
 
 Purpose:
-- 'dev' will be used for all ongoing coding work.
-- 'main' will receive only tested, stable changes.
+- Maintain clean modular separation of API, UI, documentation, and config.
 
-Status: Branch structure ready.
+Status: Directory structure prepared.
 
-Created the foundational project structure for Version-1:
 
-- app/
-    - routes/ (auth, admin, teacher, parent)
-    - models/ (users, students, classes, subjects, attendance, grades, timetable)
-    - services/ (helpers, auth_service)
-    - templates/
-    - static/ (css, js, images)
 
-- config/ (configuration files)
+[LOG-004] Codespaces Environment Setup
+Date: 11-12-2025
 
-Additional project files:
-- requirements.txt (empty for now)
-- Procfile (to be updated)
-- README.md updated earlier
-- log.txt tracking development progress
+Actions:
+- Launched GitHub Codespace for development.
+- Confirmed it was initially opened on main branch.
+- Switched to Dev branch through UI and fixed detached HEAD issue.
+- Verified terminal now tracks Dev branch.
+- Added initial files to Dev branch and committed successfully.
 
-Status: Project structure successfully established and ready for application setup.
+Status: Cloud IDE ready for backend and frontend development.
 
-Action:
-- Codespace successfully switched to 'dev' branch.
-- Verified branch state via GitHub UI and Codespaces terminal.
-- Repository is now aligned with the intended branch workflow.
 
-Status: Ready for application initialization.
+
+[LOG-005] Decision: Platform Strategy for Hosting & Development
+Date: <date/time>
+
+Options analyzed:
+1. Google Cloud Shell Editor (Not selected for now; requires card for free tier)
+2. GitHub Codespaces (Primary development environment)
+3. Render Free Tier (Chosen for backend deployment)
+4. Supabase Free Tier (Chosen for database hosting)
+5. Replit (Considered tertiary option; limited build time)
+
+Final Selection:
+- Primary Development: GitHub Codespaces
+- Database Hosting: Supabase Free Tier (no credit card)
+- Backend Hosting: Render Free Tier
+
+Status: Hosting strategy finalized.
+
+
+
+[LOG-006] Supabase Project Initialization
+Date: 12-12-2025
+
+Actions:
+- Created Supabase account and project named 'sms-version1-db'.
+- Region selected: Singapore for best performance in India.
+- Verified green status for Database, Auth, Realtime, and Storage.
+- Located connection details after UI stabilization.
+
+Status: Database instance created.
+
+
+
+[LOG-007] Supabase Database Connection Details
+Date: 12-12-2025
+
+
+Connection Details:
+- Host: db.zkczaoytwglmjrgpemxk.supabase.co
+- Port: 5432
+- User: postgres
+- Database: postgres
+- URI: postgresql://postgres:<password>@db.zkczaoytwglmjrgpemxk.supabase.co:5432/postgres
+
+Notes:
+- Direct connection method currently used.
+- Connection validated in Supabase UI.
+- These details will be used to configure backend `.env` and Render environment variables.
+
+Status: Connection credentials secured.
+
+
+
+[LOG-008] Version-1 Database Schema Creation
+Date: 12-12-2025
+
+
+Tables successfully created:
+1. users
+2. classes
+3. students
+4. subjects
+5. attendance
+6. grades
+7. timetable
+
+Schema Features:
+- UUID primary keys (auto-generated)
+- Foreign keys with cascading rules
+- Indexes for improved query performance
+- Unique constraints on roll numbers and attendance
+- Timestamps included by default
+- All tables normalized and optimized for future scaling
+
+Status: Version-1 database fully ready for backend integration.

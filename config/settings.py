@@ -1,8 +1,9 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Config:
-    SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
-
-    # Placeholder DB URL (will update to Supabase later)
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///local.db")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = os.getenv("SECRET_KEY", "default-secret-key")

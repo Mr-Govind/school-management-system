@@ -1,7 +1,7 @@
-Flask
-SQLAlchemy
+flask
 flask_sqlalchemy
 flask_migrate
-gunicorn
 python-dotenv
+gunicorn
 psycopg2-binary
+
