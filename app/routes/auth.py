@@ -1,13 +1,14 @@
-from flask import Blueprint
+from flask import Blueprint, request, jsonify
+from app.models.user import User
+from app.services.jwt_service import generate_token
+from werkzeug.security import check_password_hash
 
 auth_bp = Blueprint("auth", __name__)
 
+
 @auth_bp.route("/login", methods=["POST"])
 def login():
-    data = request.get_json()
-
-    if not data:
-        return jsonify({"error": "Missing JSON body"}), 400
+    data = request.get_json() or {}
 
     email = data.get("email")
     password = data.get("password")
@@ -15,16 +16,17 @@ def login():
     if not email or not password:
         return jsonify({"error": "Email and password required"}), 400
 
-    user = verify_user(email, password)
+    user = User.query.filter_by(email=email).first()
     if not user:
         return jsonify({"error": "Invalid credentials"}), 401
 
+    if not check_password_hash(user.password_hash, password):
+        return jsonify({"error": "Invalid credentials"}), 401
+
+    token = generate_token(user)
+
     return jsonify({
-        "message": "Login successful",
-        "user": {
-            "id": str(user.id),
-            "full_name": user.full_name,
-            "email": user.email,
-            "role": user.role
-        }
-    })
+        "access_token": token,
+        "token_type": "Bearer",
+        "role": user.role
+    }), 200

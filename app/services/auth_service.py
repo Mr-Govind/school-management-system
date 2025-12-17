@@ -1,29 +1,28 @@
-from werkzeug.security import generate_password_hash, check_password_hash
-from app.models.user import User
-from app import db
+from flask import Blueprint, request, jsonify
+from app.services.auth_service import verify_user
+from app.services.jwt_service import generate_token
+
+auth_bp = Blueprint("auth", __name__)
 
 
-def create_user(full_name, email, password, role):
-    hashed_password = generate_password_hash(password)
+@auth_bp.route("/login", methods=["POST"])
+def login():
+    data = request.get_json() or {}
 
-    user = User(
-        full_name=full_name,
-        email=email,
-        password_hash=hashed_password,
-        role=role
-    )
+    email = data.get("email")
+    password = data.get("password")
 
-    db.session.add(user)
-    db.session.commit()
-    return user
+    if not email or not password:
+        return jsonify({"error": "Email and password required"}), 400
 
-
-def verify_user(email, password):
-    user = User.query.filter_by(email=email).first()
+    user = verify_user(email, password)
     if not user:
-        return None
+        return jsonify({"error": "Invalid credentials"}), 401
 
-    if not check_password_hash(user.password_hash, password):
-        return None
+    token = generate_token(user)
 
-    return user
+    return jsonify({
+        "access_token": token,
+        "token_type": "Bearer",
+        "role": user.role
+    }), 200
