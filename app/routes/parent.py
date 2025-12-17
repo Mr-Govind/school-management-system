@@ -12,9 +12,11 @@ def view_student(student_id):
     if error:
         return jsonify({"error": error[0]}), error[1]
 
-    student = Student.query.get(student_id)
+    student = Student.query.filter_by(id=student_id, parent_id=user.id).first()
+
     if not student:
-        return jsonify({"error": "Student not found"}), 404
+        return {"error": "Forbidden"}, 403
+
 
     return jsonify({
         "id": str(student.id),
@@ -43,3 +45,19 @@ def view_attendance(student_id):
         }
         for r in records
     ])
+
+
+@parent_bp.route("/children", methods=["GET"])
+def my_children():
+    user, error = require_role(["parent"])
+    if error:
+        return {"error": error[0]}, error[1]
+
+    students = Student.query.filter_by(parent_id=user.id).all()
+
+    return [{
+        "id": str(s.id),
+        "full_name": s.full_name,
+        "roll_no": s.roll_no,
+        "class_id": str(s.class_id)
+    } for s in students]

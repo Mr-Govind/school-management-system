@@ -3,9 +3,40 @@ from app.models.classes import Class
 from app.models.students import Student
 from app.models.user import User
 from app import db
+from app.services.security import require_role
+
+
+
+
+
+
 
 admin_bp = Blueprint("admin", __name__)
 
+
+
+
+
+
+@admin_bp.route("/students/<student_id>/assign-parent", methods=["POST"])
+def assign_parent(student_id):
+    user, error = require_role(["admin"])
+    if error:
+        return {"error": error[0]}, error[1]
+
+    data = request.get_json() or {}
+    parent_id = data.get("parent_id")
+    if not parent_id:
+        return {"error": "parent_id required"}, 400
+
+    student = Student.query.get(student_id)
+    if not student:
+        return {"error": "Student not found"}, 404
+
+    student.parent_id = parent_id
+    db.session.commit()
+
+    return {"message": "Parent assigned successfully"}, 200
 
 # -------------------------
 # CREATE CLASS

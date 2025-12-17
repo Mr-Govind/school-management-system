@@ -15,8 +15,11 @@ class Student(BaseModel):
         nullable=False
     )
 
-    parent_name = db.Column(db.Text, nullable=True)
-    parent_contact = db.Column(db.Text, nullable=True)
+    parent_id = db.Column(
+        UUID(as_uuid=True),
+        db.ForeignKey("users.id"),
+        nullable=True
+    )
 
-    # Relationship
-    class_ = db.relationship("Class", back_populates="students")
+    class_ = db.relationship("Class")
+    parent = db.relationship("User")
