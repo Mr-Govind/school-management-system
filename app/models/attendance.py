@@ -1,38 +1,26 @@
 from app.models.base import BaseModel
 from app import db
+from sqlalchemy.dialects.postgresql import UUID
+
 
 class Attendance(BaseModel):
     __tablename__ = "attendance"
 
     student_id = db.Column(
-        db.Integer,
+        UUID(as_uuid=True),
         db.ForeignKey("students.id"),
-        nullable=False
-    )
-
-    class_id = db.Column(
-        db.Integer,
-        db.ForeignKey("classes.id"),
         nullable=False
     )
 
     date = db.Column(db.Date, nullable=False)
 
-    status_id = db.Column(
-        db.Integer,
-        db.ForeignKey("attendance_status.id"),
-        nullable=False
+    status = db.Column(
+        db.Text,
+        nullable=False   # present / absent
     )
 
-    remarks = db.Column(db.String(255))
-
-    student = db.relationship("Student", back_populates="attendance_records")
-    class_ = db.relationship("Class")
-    status = db.relationship("AttendanceStatus")
-
-    __table_args__ = (
-        db.UniqueConstraint(
-            "student_id", "date",
-            name="uq_student_attendance_per_day"
-        ),
+    marked_by = db.Column(
+        UUID(as_uuid=True),
+        db.ForeignKey("users.id"),
+        nullable=False
     )

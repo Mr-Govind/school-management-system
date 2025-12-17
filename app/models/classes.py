@@ -1,35 +1,34 @@
 from app.models.base import BaseModel
 from app import db
+from sqlalchemy.dialects.postgresql import UUID
 
 
 class Class(BaseModel):
     __tablename__ = "classes"
 
-    name = db.Column(db.String(50), nullable=False)
-    section = db.Column(db.String(10), nullable=True)
-    academic_year = db.Column(db.String(20), nullable=False)
+    class_name = db.Column(db.Text, nullable=False)
 
-    class_teacher_id = db.Column(
-        db.Integer,
+    teacher_id = db.Column(
+        UUID(as_uuid=True),
         db.ForeignKey("users.id"),
         nullable=True
     )
 
-    # Relationships
+    # Relationships (optional, read-only for now)
     students = db.relationship(
         "Student",
         back_populates="class_",
-        cascade="all, delete-orphan"
+        lazy="select"
     )
 
     subjects = db.relationship(
         "Subject",
         back_populates="class_",
-        cascade="all, delete-orphan"
+        lazy="select"
     )
 
     timetables = db.relationship(
         "Timetable",
         back_populates="class_",
-        cascade="all, delete-orphan"
+        lazy="select"
     )

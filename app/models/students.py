@@ -1,28 +1,22 @@
 from app.models.base import BaseModel
 from app import db
+from sqlalchemy.dialects.postgresql import UUID
+
 
 class Student(BaseModel):
     __tablename__ = "students"
 
-    admission_number = db.Column(db.String(50), unique=True, nullable=False)
-    first_name = db.Column(db.String(100), nullable=False)
-    last_name = db.Column(db.String(100), nullable=True)
-    date_of_birth = db.Column(db.Date, nullable=True)
+    full_name = db.Column(db.Text, nullable=False)
+    roll_no = db.Column(db.Text, nullable=False)
 
     class_id = db.Column(
-        db.Integer,
+        UUID(as_uuid=True),
         db.ForeignKey("classes.id"),
         nullable=False
     )
 
-    guardian_name = db.Column(db.String(100), nullable=True)
-    guardian_contact = db.Column(db.String(20), nullable=True)
+    parent_name = db.Column(db.Text, nullable=True)
+    parent_contact = db.Column(db.Text, nullable=True)
 
-    # Relationships
+    # Relationship
     class_ = db.relationship("Class", back_populates="students")
-
-    attendance_records = db.relationship(
-        "Attendance",
-        back_populates="student",
-        cascade="all, delete-orphan"
-    )
