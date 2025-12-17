@@ -2,12 +2,7 @@ from app.services.auth_context import get_current_user
 
 
 def require_role(allowed_roles):
-    """
-    Resolve current user via JWT or X-User-Id
-    and validate role.
-    """
     user = get_current_user()
-
     if not user:
         return None, ("Unauthorized", 401)
 
