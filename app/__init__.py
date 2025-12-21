@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import text
 from config.settings import Config
+from flask_cors import CORS
+
+
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -13,6 +16,16 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
+
+    
+    # -------------------------
+    # CORS CONFIGURATION
+    # -------------------------
+    CORS(
+        app,
+        resources={r"/*": {"origins": "*"}},
+        supports_credentials=True
+    )
 
     # Import models AFTER db init
     from app import models
