@@ -27,3 +27,21 @@ def require_role(allowed_roles):
 
         return wrapper
     return decorator
+
+
+def admin_required(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        user, error = get_current_user()
+
+        if error:
+            message, status = error
+            return jsonify({"error": message}), status
+
+        # adjust role check to match your User model
+        if user.role.lower() != "admin":
+            return jsonify({"error": "Admin access required"}), 403
+
+        return f(*args, **kwargs)
+
+    return wrapper

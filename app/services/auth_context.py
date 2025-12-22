@@ -21,3 +21,11 @@ def get_current_user():
         return None, ("User not found", 401)
 
     return user, None
+
+def get_current_user_id():
+    user, error = get_current_user()
+
+    if error:
+        return None
+
+    return user.id

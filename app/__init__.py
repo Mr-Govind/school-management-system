@@ -35,9 +35,11 @@ def create_app():
     from app.routes.teacher import teacher_bp
     from app.routes.parent import parent_bp
     from app.routes.attendance import attendance_bp
-    
+    from app.routes.cms import cms_bp
+
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
+    app.register_blueprint(cms_bp, url_prefix="/cms")
     app.register_blueprint(parent_bp, url_prefix="/parent")
     app.register_blueprint(admin_bp, url_prefix="/admin")
     app.register_blueprint(teacher_bp, url_prefix="/teacher")
