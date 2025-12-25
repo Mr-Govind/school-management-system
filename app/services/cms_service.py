@@ -29,10 +29,13 @@ def get_page_content(page_key):
 def update_content(content, data, user_id):
     for field in [
         "content_value", "media_url",
-        "style", "metadata", "is_active"
+        "style", "is_active"
     ]:
         if field in data:
             setattr(content, field, data[field])
+
+    if "metadata" in data:
+        content.meta = data["metadata"]
 
     content.updated_by = user_id
     db.session.commit()

@@ -36,21 +36,29 @@ def update_cms(content_id):
 
 
 # -----------------------------
-# PUBLIC: FETCH CMS CONTENT
+# ADMIN: FETCH ALL CMS CONTENT
 # -----------------------------
-@cms_bp.route("/cms", methods=["GET"])
-def get_cms():
-    page_key = request.args.get("page")
-    contents = get_page_content(page_key)
+@cms_bp.route("/admin/cms", methods=["GET"])
+@admin_required
+def get_all_cms():
+    contents = (
+        CMSContent
+        .query
+        .order_by(CMSContent.created_at.desc())
+        .all()
+    )
 
     return jsonify([
         {
+            "id": str(c.id),
             "content_key": c.content_key,
+            "page_key": c.page_key,
             "content_type": c.content_type,
             "content_value": c.content_value,
             "media_url": c.media_url,
             "style": c.style,
-            "metadata": c.meta   # ✅ FIX 2
+            "metadata": c.meta,
+            "is_active": c.is_active
         }
         for c in contents
     ])

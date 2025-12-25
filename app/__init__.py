@@ -47,7 +47,7 @@ def create_app():
 
     @app.route("/")
     def index():
-        return "SMS Version-1 Backend successfull"
+        return "SMS Version-1 Backend successfully"
 
     @app.route("/health/db")
     def db_health_check():
