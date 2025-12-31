@@ -33,3 +33,21 @@ def get_students_by_class(class_id):
         }
         for s in students
     ])
+
+@teacher_bp.route("/classes", methods=["GET"])
+@require_role(["teacher"])
+def get_teacher_classes():
+    """
+    Teacher: Fetch classes assigned to the logged-in teacher
+    """
+    teacher_id = g.user_id
+
+    classes = Class.query.filter_by(teacher_id=teacher_id).all()
+
+    return jsonify([
+        {
+            "id": str(c.id),
+            "class_name": c.class_name
+        }
+        for c in classes
+    ])
