@@ -28,10 +28,16 @@ def get_students_by_class(class_id):
         {
             "id": str(s.id),
             "full_name": s.full_name,
-            "roll_no": s.roll_no
+            "roll_no": s.roll_no,
+            "parent": {
+                "id": str(s.parent.id),
+                "full_name": s.parent.full_name
+            } if s.parent else None
         }
         for s in students
     ])
+
+
 
 
 # -----------------------------------------
